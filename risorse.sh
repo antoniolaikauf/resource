@@ -74,21 +74,19 @@ processo()
     nameProcess()
     {
         echo "Processo:"
-        echo "  UTENTE: ${process[user]}"
-        echo "  PID: ${process[pid]}"
-        echo "  CPU: ${process[cpu]}"
-        echo "  MEMORIA: ${process[memory]} %"
-        echo "  MEMORIA VIRTUALE: ${process[memory_virtual]} byte"
-        echo "  STATO: ${process[state]}"
-        echo "  TIME: ${process[time]}"
-        echo "  COMAND: ${process[comand]}"
+        echo "${process[user]} " # PROCESSO
+        echo "${process[pid]} " # PID
+        echo "${process[cpu]} " # CPU
+        echo "${process[memory]}% " # MEMORIA
+        echo "${process[memory_virtual]}byte " # MEMORIA VIRTUALE
+        echo "${process[state]} " # STATO
+        echo "${process[time]} " # TIME
+        echo "${process[comand]} " # COMAND
     }
 
     nameProcess
-
 }
 
-memory_change_bytes=()
 
 for virtual_memory_Id in "${!PROCESS_MEMORY_VIRTUAL[@]}"
 do 
@@ -99,23 +97,22 @@ do
     # creazione del proceso
     processo ${PROCESS_USER[$virtual_memory_Id]} ${PROCESS_PID[$virtual_memory_Id]} ${PROCESS_CPU[$virtual_memory_Id]} ${PROCESS_MEMORY[$virtual_memory_Id]} $value ${PROCESS_STATE[$virtual_memory_Id]} ${PROCESS_TIME[$virtual_memory_Id]} ${PROCESS_COMAND[$virtual_memory_Id]}
     echo $?
-    break
 done
 
 # si evita termini con Microsoft con la falg -v perchè potrebbero derivare da un ambiente virtuale
-GPU=`lspci | grep -E "VGA|3D|Display" | grep -v Microsoft` 
-echo $GPU
+# GPU=`lspci | grep -E "VGA|3D|Display" | grep -v Microsoft` 
+# echo $GPU
 
-if [ -n "$GPU" ]; then
-    echo "non è installata una GPU"
-    echo "il modello di CPU è: $MODEL_NAME"
-    echo $GPU
-    . ./gpu.sh
-fi
+# if [ -n "$GPU" ]; then
+#     echo "non è installata una GPU"
+#     echo "il modello di CPU è: $MODEL_NAME"
+#     echo $GPU
+#     . ./gpu.sh
+# fi
 
-echo "non è installata una GPU"
-echo "il modello di CPU è: $MODEL_NAME"
-. ./cpu.sh
+# echo "non è installata una GPU"
+# echo "il modello di CPU è: $MODEL_NAME"
+# . ./cpu.sh
 
 # help test 
 # per vedere singoli processi ps -p pid processo
